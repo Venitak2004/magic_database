@@ -8,3 +8,5 @@ each_item = c.fetchall()
 
 for item in each_item:
        print (item)
+
+       

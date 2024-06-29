@@ -1,3 +1,5 @@
+import database
+
 #This code will return all the players with the same team allocation
 
 teams = c.fetchall()

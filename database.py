@@ -1,9 +1,9 @@
 import sqlite3
 #Connect to the database
-#connection = sqlite3.connect('magic_database.db')
+connection = sqlite3.connect('magic_database.db')
 
 #create the cursor to access the databae
-#c = connection.cursor() 
+c = connection.cursor() 
 
 #Set up table headers for the database
 #c.execute("""CREATE TABLE players (
@@ -38,9 +38,9 @@ import sqlite3
 #for item in each_item:
 #       print (item)
 
-c.execute(""" UPDATE players SET ffa_id = '93651247'
-          WHERE rowid = 10
-          """)
+#c.execute(""" UPDATE players SET ffa_id = '93651247'
+#          WHERE rowid = 10
+#          """)
 
 c.execute("SELECT rowid, * FROM players")
 
@@ -50,7 +50,7 @@ for item in each_item:
        print (item)
 
 #Returns all records from the database query
-def show_all()
+def show_all():
        #Connect to the database
        connection = sqlite3.connect('magic_database.db')
        
@@ -62,8 +62,66 @@ def show_all()
        each_item = c.fetchall()
        #loop through and print each line of the database
        for item in each_item:
-       print (item)
+         print (item)
        
-       
+       #Commit our commands
+       connection.commit()
        #close connection at end of instance
+       connection.close()
+
+# Add a new player to a the database/team.       
+def add_player(ffa_id, l_name, f_name, dob, team, fee, mobile, email):
+     #Connect to the database
+     connection = sqlite3.connect('magic_database.db')
+     
+     #create the cursor to access the databa
+     c = connection.cursor() 
+
+     c.execute("INSERT INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (ffa_id, l_name, f_name, dob, team, fee, mobile, email))
+     #Commit our commands
+     connection.commit()
+     #Close the connection
+     connection.close()
+     
+
+     #Returns unique FFA id number from the database.
+def last_name(l_name):
+       #Connect to the database
+       connection = sqlite3.connect('magic_database.db')
+       
+       #create the cursor to access the databae
+       c = connection.cursor() 
+
+       #Ask database to return the player by searching last name.
+       c.execute("SELECT * FROM players WHERE l_name = (?)", l_name )
+       each_item = c.fetchall()
+       #loop through and print each line of the database
+       for item in each_item:
+         print (item)
+       
+       #Commit our commands
+       connection.commit()
+       #close connection at end of instance
+       connection.close()
+
+def player_changes():
+      #Connect to the database
+       connection = sqlite3.connect('magic_database.db')
+       
+       #create the cursor to access the databae
+       c = connection.cursor() 
+
+       c.execute(""" UPDATE players SET team = 'U16JPL'
+              WHERE rowid = 10
+              """)
+
+       c.execute("SELECT rowid, * FROM players")
+
+       each_item = c.fetchall()
+
+       for item in each_item:
+           print (item)
+       #Commit our commands
+       connection.commit()
+       #Close the connection
        connection.close()
