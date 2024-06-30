@@ -72,51 +72,26 @@ def show_all():
        connection.close()
 
 # Add a new player to a the database/team.       
-def add_player(ffa_id, l_name, f_name, dob, team, fee, mobile, email):
+def add_player(ffa_id, l_name, f_name, dob, team, fee_amount, mobile, email):
      #Connect to the database
      connection = sqlite3.connect('magic_database.db')
      
      #create the cursor to access the databa
      c = connection.cursor() 
 
-     c.execute("INSERT INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (ffa_id, l_name, f_name, dob, team, fee, mobile, email))
+     c.execute("INSERT INTO players VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (ffa_id, l_name, f_name, dob, team, fee_amount, mobile, email))
      #Commit our commands
      connection.commit()
      #Close the connection
      connection.close()
      
 
-     #Returns unique FFA id number from the database.
-def players_last_name():
-       #Connect to the database
-       connection = sqlite3.connect('magic_database.db')
-       
-       #create the cursor to access the databae
-       c = connection.cursor()
-       
-       #Ask database to return the player by searching last name.
-       c.execute("SELECT * FROM players WHERE l_name LIKE ?", ('%' + l_name + '%',))
-       return c.fetchall()
-       
-l_name = input ("Players Last Name: ")
+     
 
-
-players = players_last_name()
-for player in players:
-    print(player)           
-       #each_item = c.fetchall()
-       #loop through and print each line of the database
-       #for item in each_item:
-        #  print(item) 
-       
-       #Commit our commands
-connection.commit()
-       #close connection at end of instance
-connection.close()
 #Make changes to existing player in the database
 
 def player_changes():
-      #Connect to the database
+       #Connect to the database
        connection = sqlite3.connect('magic_database.db')
        
        #create the cursor to access the databae
@@ -145,15 +120,15 @@ def player_delete():
        #create the cursor to access the databae
        c = connection.cursor() 
 
-       user_selection = input("What player do you want to delete: ")
+user_selection = input("What players row id do you want to delete: " rowid)
 
-       c.execute(" DELETE from players WHERE rowid = (user_selection)")
+c.execute(" DELETE from players WHERE rowid = (user_selection)")
        
        
        #Commit our commands
-       connection.commit()
+connection.commit()
        #Close the connection
-       connection.close()       
+connection.close()       
 
 #Asking the user to insert a new player into the database
 def player_insert(ffa_id, l_name, f_name, dob, team, fee_amount, mobile, email):
@@ -184,3 +159,27 @@ def player_insert(ffa_id, l_name, f_name, dob, team, fee_amount, mobile, email):
        connection.commit()
        #Close the connection
        connection.close()  
+
+#Returns players details by searching last name.
+def players_last_name():
+       #Connect to the database
+       connection = sqlite3.connect('magic_database.db')
+       
+       #create the cursor to access the databae
+       c = connection.cursor()
+       
+       #Ask database to return the player by searching last name.
+       c.execute("SELECT * FROM players WHERE l_name LIKE ?", ('%' + l_name + '%',))
+       return c.fetchall()
+       
+l_name = input ("Players Last Name: ")
+
+
+players = players_last_name()
+for player in players:
+    print(player)           
+
+#Commit our commands
+connection.commit()
+#close connection at end of instance
+connection.close()
